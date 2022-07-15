@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material';
-import { LocalizationProvider } from '@mui/lab';
-import { default as DateAdapter } from '@mui/lab/AdapterLuxon';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { useNotification } from 'hooks';
 
 export const appTheme = createTheme({
   components: {
@@ -61,26 +62,27 @@ export const appTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: `Open Sans, Roboto`,
+    fontFamily: `Noto Sans, Roboto`,
   },
   palette: {
     primary: {
-      light: '#8bc34a',
-      main: '#8bc34a',
-      dark: '#9ccc65',
+      light: '#c9de7b',
+      main: '#3b8f57',
+      dark: '#06371f',
     },
     secondary: {
-      light: '#9575cd',
-      main: '#7e57c2',
-      dark: '#673ab7',
+      light: '#f7f8f8',
+      main: '#f7f8f8',
+      dark: '#f7f8f8',
     },
   },
 });
 
 const Theme = ({ children }: any) => {
+  useNotification();
   return (
     <ThemeProvider theme={appTheme}>
-      <LocalizationProvider dateAdapter={DateAdapter}>{children}</LocalizationProvider>
+      <LocalizationProvider dateAdapter={AdapterLuxon}>{children}</LocalizationProvider>
     </ThemeProvider>
   );
 };

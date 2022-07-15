@@ -1,6 +1,6 @@
 import { Logout, Menu as MenuIcon } from '@mui/icons-material';
 import { AppBar, Divider, Drawer, IconButton, Toolbar } from '@mui/material';
-import { AppBreadcrumb, AppMenu } from 'containers';
+import { AppMenu } from 'containers';
 import { useWindowSize } from 'hooks';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -39,7 +39,6 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
           )}
-          <AppBreadcrumb />
           <div className='flex-1' />
           <IconButton className='mr-3' onClick={() => dispatch(signOut())}>
             <Logout />

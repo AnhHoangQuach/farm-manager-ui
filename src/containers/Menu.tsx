@@ -1,7 +1,9 @@
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { styled } from '@mui/styles';
 import { Link, useLocation } from 'react-router-dom';
-import { privateRoute } from 'routes';
+import { teamManagerRoute } from 'routes';
+import { useSelector } from 'react-redux';
+import { profileSelector } from 'reducers/profile';
 
 const StyledListItem = styled(ListItemButton)({
   borderRadius: '8px !important',
@@ -33,7 +35,9 @@ const MenuItem = ({ name, path }: MenuItemProps) => {
 };
 
 const Menu = () => {
-  const { home } = privateRoute;
+  const { role } = useSelector(profileSelector);
+
+  const { home } = teamManagerRoute;
   return (
     <>
       <List className='flex flex-col gap-1'>

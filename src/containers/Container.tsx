@@ -1,7 +1,5 @@
 import { AppTheme } from 'containers';
 import { SnackbarProvider } from 'notistack';
-import { QueryClientProvider } from 'react-query';
-import { queryClient } from 'services';
 
 type ContainerType = {
   children: React.ReactNode;
@@ -15,9 +13,7 @@ const Container = ({ children }: ContainerType) => {
       variant='success'
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     >
-      <QueryClientProvider client={queryClient}>
-        <AppTheme>{children}</AppTheme>
-      </QueryClientProvider>
+      <AppTheme>{children}</AppTheme>
     </SnackbarProvider>
   );
 };
