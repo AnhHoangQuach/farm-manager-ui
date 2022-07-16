@@ -1,15 +1,13 @@
 import { AppHeader } from 'containers';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { teamManagerRoute, staticRoute, mainManagerRoute, farmerRoute } from 'routes';
-import { useWindowSize } from 'hooks';
+import { staticRoute, privateRoute } from 'routes';
 import { profileSelector } from 'reducers/profile';
 import { useEffect } from 'react';
 
 const PrivateLayout = () => {
-  const { isMobile } = useWindowSize();
   const navigate = useNavigate();
-  const { isLoggedIn, role } = useSelector(profileSelector);
+  const { isLoggedIn } = useSelector(profileSelector);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -18,37 +16,15 @@ const PrivateLayout = () => {
   }, [navigate, isLoggedIn]);
 
   return (
-    <div className='App'>
-      <main>
-        <AppHeader />
-        <div className='px-[110px] py-10 bg-secondary-main'>
+    <div className='py-10 px-4 sm:px-[110px] h-screen'>
+      <main className='bg-secondary-main rounded-[30px] h-full'>
+        <div className='p-6'>
+          <AppHeader />
           <Routes>
-            {role === 'TEAM_MANAGER' && (
-              <>
-                {Object.values(teamManagerRoute).map(({ path, element }) => (
-                  <Route key={path} path={path} element={element} />
-                ))}
-                <Route path='*' element={<Navigate to={teamManagerRoute.home.path} />} />
-              </>
-            )}
-
-            {role === 'MAIN_MANAGER' && (
-              <>
-                {Object.values(mainManagerRoute).map(({ path, element }) => (
-                  <Route key={path} path={path} element={element} />
-                ))}
-                <Route path='*' element={<Navigate to={mainManagerRoute.home.path} />} />
-              </>
-            )}
-
-            {role === 'FARMER' && (
-              <>
-                {Object.values(farmerRoute).map(({ path, element }) => (
-                  <Route key={path} path={path} element={element} />
-                ))}
-                <Route path='*' element={<Navigate to={farmerRoute.home.path} />} />
-              </>
-            )}
+            {Object.values(privateRoute).map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+            <Route path='*' element={<Navigate to={privateRoute.profile.path} />} />
           </Routes>
         </div>
       </main>

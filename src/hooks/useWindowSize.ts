@@ -15,7 +15,7 @@ const useWindowSize = () => {
     return () => window.removeEventListener('resize', handleWindowSizeChange);
   }, []);
 
-  return { windowSize, isMobile: windowSize.width < 768 };
+  return { windowSize, isMobile: windowSize.width < 1024 };
 };
 
 export default useWindowSize;

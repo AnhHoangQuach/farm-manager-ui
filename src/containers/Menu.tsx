@@ -1,18 +1,14 @@
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { styled } from '@mui/styles';
 import { Link, useLocation } from 'react-router-dom';
-import { teamManagerRoute } from 'routes';
+import { privateRoute } from 'routes';
 import { useSelector } from 'react-redux';
 import { profileSelector } from 'reducers/profile';
 
 const StyledListItem = styled(ListItemButton)({
-  borderRadius: '8px !important',
+  borderRadius: '28px !important',
   '&.Mui-selected': {
-    backgroundColor: 'var(--color-primary-main) !important',
-    color: '#fff',
-  },
-  '&:hover': {
-    backgroundColor: 'var(--color-primary-light) !important',
+    backgroundColor: 'var(--color-primary-dark) !important',
     color: '#fff',
   },
 });
@@ -36,13 +32,37 @@ const MenuItem = ({ name, path }: MenuItemProps) => {
 
 const Menu = () => {
   const { role } = useSelector(profileSelector);
+  const { profile } = privateRoute;
 
-  const { home } = teamManagerRoute;
+  const { task, attendance } = privateRoute;
+
+  const { employee } = privateRoute;
+
+  const { kpi } = privateRoute;
+
   return (
     <>
-      <List className='flex flex-col gap-1'>
-        <MenuItem {...home} />
-      </List>
+      {role === 'FARMER' && (
+        <List className='md:ml-10 flex flex-col gap-2 md:gap-0 md:flex-row md:space-x-10'>
+          <MenuItem {...task} />
+          <MenuItem {...attendance} />
+          <MenuItem {...profile} />
+        </List>
+      )}
+
+      {role === 'MAIN_MANAGER' && (
+        <List className='md:ml-10 flex flex-col gap-2 md:gap-0 md:flex-row md:space-x-10'>
+          <MenuItem {...employee} />
+          <MenuItem {...profile} />
+        </List>
+      )}
+
+      {role === 'TEAM_MANAGER' && (
+        <List className='md:ml-10 flex flex-col gap-2 md:gap-0 md:flex-row md:space-x-10'>
+          <MenuItem {...kpi} />
+          <MenuItem {...profile} />
+        </List>
+      )}
     </>
   );
 };

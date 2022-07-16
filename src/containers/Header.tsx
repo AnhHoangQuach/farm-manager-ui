@@ -18,27 +18,38 @@ const Header = () => {
       <Drawer
         anchor='left'
         variant={isMobile ? 'temporary' : 'persistent'}
-        open={isMobile ? openDrawer : true}
+        open={isMobile ? openDrawer : false}
         onClose={() => setOpenDrawer(false)}
         PaperProps={{ style: { width: '280px', padding: '8px 16px' } }}
       >
         <div className='flex justify-center items-center h-12 gap-3'>
           <Link to='/'>
-            <img src={require('assets/icons/Metafarm.png')} alt='' className='h-10' />
+            <img src={require('assets/icons/logo_farm.png')} alt='' className='h-10' />
           </Link>
-          <span className='font-medium text-2xl text-primary-main'>IG</span>
+          <span className='font-medium text-2xl text-primary-main'>METAFARM</span>
         </div>
         <Divider className='my-2' />
         <AppMenu />
       </Drawer>
 
-      <AppBar position='sticky' color='inherit' elevation={1}>
-        <Toolbar>
-          {isMobile && (
+      <AppBar position='static' color='secondary' elevation={0}>
+        <Toolbar disableGutters>
+          {isMobile ? (
             <IconButton onClick={() => setOpenDrawer(true)} className='mr-2'>
               <MenuIcon />
             </IconButton>
+          ) : (
+            <>
+              <div className='flex justify-center items-center h-12 gap-3'>
+                <Link to='/'>
+                  <img src={require('assets/icons/logo_farm.png')} alt='' className='h-20' />
+                </Link>
+              </div>
+              <Divider className='my-2' />
+              <AppMenu />
+            </>
           )}
+
           <div className='flex-1' />
           <IconButton className='mr-3' onClick={() => dispatch(signOut())}>
             <Logout />
