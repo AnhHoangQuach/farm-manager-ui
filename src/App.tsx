@@ -5,6 +5,7 @@ import { store } from 'reducers';
 import { PrivateLayout } from 'layouts';
 import { useEffect, useState } from 'react';
 import { signIn } from 'reducers/profile';
+import { updateDarkmode } from 'reducers/coreUi';
 import { staticRoute } from 'routes';
 
 const App = () => {
@@ -13,7 +14,9 @@ const App = () => {
   useEffect(() => {
     try {
       const profile = JSON.parse(localStorage.getItem('profile') ?? '');
+      const mode = localStorage.getItem('mode') ?? 'light';
       store.dispatch(signIn(profile));
+      store.dispatch(updateDarkmode(mode));
     } catch {
     } finally {
       setIsReady(true);

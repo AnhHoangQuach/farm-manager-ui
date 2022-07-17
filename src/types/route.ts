@@ -3,6 +3,7 @@ type RouteType = {
   url?: (query: any) => string;
   name?: string;
   element: JSX.Element;
+  requireRole?: (role: any) => boolean;
 };
 
 export type PrivateRouteType = {

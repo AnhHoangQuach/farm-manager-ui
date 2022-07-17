@@ -1,17 +1,36 @@
-import { Logout, Menu as MenuIcon } from '@mui/icons-material';
-import { AppBar, Divider, Drawer, IconButton, Toolbar } from '@mui/material';
+import {
+  Logout,
+  Menu as MenuIcon,
+  NotificationsNoneOutlined,
+  Brightness4Outlined,
+  Brightness5Outlined,
+} from '@mui/icons-material';
+import { AppBar, Divider, Drawer, IconButton, Toolbar, Switch } from '@mui/material';
 import { AppMenu } from 'containers';
 import { useWindowSize } from 'hooks';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from 'reducers/profile';
 import { Link } from 'react-router-dom';
+import { updateDarkmode, coreUiSelector } from 'reducers/coreUi';
+import { isEnabled, enable, disable, setFetchMethod } from 'darkreader';
 
 const Header = () => {
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
 
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const { mode } = useSelector(coreUiSelector);
+
+  const darkReaderOptions = { brightness: 100, contrast: 96, sepia: 0 };
+
+  const toggleDarkMode = () => {
+    setFetchMethod(window.fetch);
+    const isOn = isEnabled();
+    isOn ? disable() : enable(darkReaderOptions);
+    dispatch(updateDarkmode(isOn ? 'light' : 'dark'));
+  };
 
   return (
     <>
@@ -51,6 +70,13 @@ const Header = () => {
           )}
 
           <div className='flex-1' />
+          <div className='flex items-center mr-3'>
+            <Switch checked={mode === 'dark'} onClick={toggleDarkMode} />
+            {mode === 'dark' ? <Brightness4Outlined /> : <Brightness5Outlined />}
+          </div>
+          <IconButton className='mr-3'>
+            <NotificationsNoneOutlined />
+          </IconButton>
           <IconButton className='mr-3' onClick={() => dispatch(signOut())}>
             <Logout />
           </IconButton>
